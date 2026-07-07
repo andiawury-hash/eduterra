@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semua Artikel — Efeksains</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --coral: #E3735E;
+  --coral-dim: #E3735E22;
+  --teal: #088F8F;
+  --teal-dim: #088F8F1F;
+  --ink: #0D2B2B;
+  --ink-soft: #0D2B2B99;
+  --ink-faint: #0D2B2B55;
+  --paper: #F2F8F7;
+  --paper-raised: #FFFFFF;
+  --signal: #F2B705;
+  --line: #0D2B2B18;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+}
+.display { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+.mono { font-family: 'IBM Plex Mono', monospace; }
+a { color: inherit; }
+img { max-width: 100%; display: block; }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+
+.nav { display: flex; align-items: center; justify-content: space-between; padding: 28px 0; }
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-logo-mark { width: 34px; height: 34px; border-radius: 999px; background: var(--teal); position: relative; flex-shrink: 0; }
+.nav-logo-mark::after { content: ""; position: absolute; inset: 8px; background: var(--coral); clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); border-radius: 3px; }
+.nav-logo-text { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 19px; letter-spacing: -0.01em; color: var(--ink); }
+.nav-links { display: flex; align-items: center; gap: 30px; font-size: 15px; font-weight: 500; }
+.nav-links a { text-decoration: none; }
+.nav-links a:hover { color: var(--teal); }
+
+.page-head { padding: 40px 0 20px; }
+.page-head h1 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 40px; letter-spacing: -0.02em; margin-bottom: 12px; }
+.page-head p { color: var(--ink-soft); font-size: 16px; max-width: 560px; }
+
+.filters { display: flex; gap: 10px; margin: 30px 0; flex-wrap: wrap; }
+.filter-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1.5px solid var(--line);
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.filter-btn:hover { border-color: var(--teal); }
+.filter-btn.active { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; padding-bottom: 60px; }
+.card {
+  background: var(--paper-raised);
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px -16px #0D2B2B33; }
+.card-thumb { height: 140px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+.card-thumb svg { width: 56px; height: 56px; }
+.card-body { padding: 20px 20px 22px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.tag { display: inline-flex; align-items: center; gap: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; width: fit-content; }
+.tag .dot { width: 6px; height: 6px; border-radius: 999px; }
+.card h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 18px; line-height: 1.35; letter-spacing: -0.01em; }
+.card p { font-size: 14px; color: var(--ink-soft); line-height: 1.55; flex: 1; }
+.card-meta { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink-faint); display: flex; gap: 10px; padding-top: 6px; border-top: 1px solid var(--line); }
+
+.empty-state { padding: 60px 0; text-align: center; color: var(--ink-faint); font-family: 'IBM Plex Mono', monospace; font-size: 14px; }
+
+footer { border-top: 1px solid var(--line); padding: 32px 0 40px; margin-top: 20px; }
+.footer-inner { display: flex; align-items: center; justify-content: space-between; font-size: 13.5px; color: var(--ink-faint); }
+.footer-inner a { text-decoration: none; color: var(--teal); font-weight: 600; }
+
+@media (max-width: 860px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .nav-links { display: none; }
+  .page-head h1 { font-size: 32px; }
+}
+@media (max-width: 560px) {
+  .grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-mark"></span>
+      <span class="nav-logo-text">Efeksains</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Beranda</a>
+      <a href="artikel.html">Artikel</a>
+    </div>
+  </nav>
+</div>
+
+<div class="wrap">
+  <section class="page-head">
+    <h1 class="display">Semua Artikel</h1>
+    <p>Kumpulan tulisan soal iklim, kesehatan, dan riset seputar keduanya. Filter berdasarkan topik yang paling kamu penasarin.</p>
+  </section>
+
+  <div class="filters" id="filters"></div>
+  <div class="grid" id="article-grid"></div>
+  <div class="empty-state" id="empty-state" style="display:none;">Belum ada artikel di kategori ini.</div>
+</div>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>&copy; 2026 Efeksains</span>
+    <a href="index.html">Kembali ke beranda &rarr;</a>
+  </div>
+</footer>
+
+<script src="articles-data.js"></script>
+<script>
+  const grid = document.getElementById('article-grid');
+  const filtersEl = document.getElementById('filters');
+  const emptyState = document.getElementById('empty-state');
+
+  const params = new URLSearchParams(window.location.search);
+  let activeCategory = params.get('kategori') || 'semua';
+
+  function renderFilters() {
+    const cats = ['semua', ...Object.keys(CATEGORY_LABELS)];
+    filtersEl.innerHTML = cats.map(c => {
+      const label = c === 'semua' ? 'Semua' : CATEGORY_LABELS[c];
+      const isActive = c === activeCategory ? 'active' : '';
+      return `<button class="filter-btn ${isActive}" data-cat="${c}">${label}</button>`;
+    }).join('');
+
+    filtersEl.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeCategory = btn.dataset.cat;
+        renderFilters();
+        renderGrid();
+      });
+    });
+  }
+
+  function renderGrid() {
+    const filtered = activeCategory === 'semua'
+      ? ARTICLES
+      : ARTICLES.filter(a => a.category === activeCategory);
+
+    grid.innerHTML = filtered.map(cardHTML).join('');
+    emptyState.style.display = filtered.length === 0 ? 'block' : 'none';
+  }
+
+  renderFilters();
+  renderGrid();
+</script>
+
+</body>
+</html>

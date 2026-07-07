@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artikel — Efeksains</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --coral: #E3735E;
+  --teal: #088F8F;
+  --ink: #0D2B2B;
+  --ink-soft: #0D2B2B99;
+  --ink-faint: #0D2B2B55;
+  --paper: #F2F8F7;
+  --paper-raised: #FFFFFF;
+  --signal: #F2B705;
+  --line: #0D2B2B18;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--paper); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; line-height: 1.65; }
+.display { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+.mono { font-family: 'IBM Plex Mono', monospace; }
+a { color: inherit; }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+.wrap-narrow { max-width: 760px; margin: 0 auto; padding: 0 28px; }
+
+.nav { display: flex; align-items: center; justify-content: space-between; padding: 28px 0; }
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-logo-mark { width: 34px; height: 34px; border-radius: 999px; background: var(--teal); position: relative; flex-shrink: 0; }
+.nav-logo-mark::after { content: ""; position: absolute; inset: 8px; background: var(--coral); clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); border-radius: 3px; }
+.nav-logo-text { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 19px; letter-spacing: -0.01em; color: var(--ink); }
+.nav-links { display: flex; align-items: center; gap: 30px; font-size: 15px; font-weight: 500; }
+.nav-links a { text-decoration: none; }
+.nav-links a:hover { color: var(--teal); }
+
+.back-link { display: inline-flex; align-items: center; gap: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--teal); text-decoration: none; margin-bottom: 20px; }
+
+.article-head { padding: 20px 0 10px; }
+.tag { display: inline-flex; align-items: center; gap: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; width: fit-content; }
+.tag .dot { width: 6px; height: 6px; border-radius: 999px; }
+.article-head h1 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 38px; line-height: 1.22; letter-spacing: -0.015em; margin: 18px 0 22px; }
+.article-meta { display: flex; gap: 18px; align-items: center; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--ink-faint); padding-bottom: 26px; border-bottom: 1px solid var(--line); margin-bottom: 30px; }
+
+.article-content { font-size: 17.5px; line-height: 1.8; color: var(--ink); }
+.article-content p { margin-bottom: 22px; }
+.article-content p:first-of-type::first-letter {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 52px;
+  font-weight: 700;
+  float: left;
+  line-height: 0.85;
+  margin: 6px 8px 0 0;
+  color: var(--coral);
+}
+
+.pulse { width: 100%; height: 40px; display: block; margin: 40px 0; }
+.pulse path { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+.related-head { font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); font-weight: 600; margin-bottom: 20px; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; padding-bottom: 60px; }
+.card {
+  background: var(--paper-raised);
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px -16px #0D2B2B33; }
+.card-thumb { height: 120px; display: flex; align-items: center; justify-content: center; }
+.card-thumb svg { width: 48px; height: 48px; }
+.card-body { padding: 18px 18px 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.card h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 16px; line-height: 1.35; letter-spacing: -0.01em; }
+.card p { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; flex: 1; }
+.card-meta { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: var(--ink-faint); display: flex; gap: 10px; padding-top: 6px; border-top: 1px solid var(--line); }
+
+.not-found { padding: 80px 0; text-align: center; }
+.not-found h1 { font-family: 'Space Grotesk', sans-serif; font-size: 28px; margin-bottom: 14px; }
+.not-found a { color: var(--teal); font-weight: 600; text-decoration: none; }
+
+footer { border-top: 1px solid var(--line); padding: 32px 0 40px; margin-top: 20px; }
+.footer-inner { display: flex; align-items: center; justify-content: space-between; font-size: 13.5px; color: var(--ink-faint); }
+.footer-inner a { text-decoration: none; color: var(--teal); font-weight: 600; }
+
+@media (max-width: 860px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .nav-links { display: none; }
+  .article-head h1 { font-size: 30px; }
+}
+@media (max-width: 560px) {
+  .grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-mark"></span>
+      <span class="nav-logo-text">Efeksains</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Beranda</a>
+      <a href="artikel.html">Artikel</a>
+    </div>
+  </nav>
+</div>
+
+<div id="content"></div>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>&copy; 2026 Efeksains</span>
+    <a href="artikel.html">Baca artikel lain &rarr;</a>
+  </div>
+</footer>
+
+<script src="articles-data.js"></script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const id = parseInt(params.get('id'), 10);
+  const article = ARTICLES.find(a => a.id === id);
+  const contentEl = document.getElementById('content');
+
+  if (!article) {
+    contentEl.innerHTML = `
+      <div class="wrap">
+        <div class="not-found">
+          <h1 class="display">Artikel nggak ketemu</h1>
+          <p style="color:var(--ink-soft); margin-bottom:20px;">Mungkin link-nya salah atau artikelnya udah dipindah.</p>
+          <a href="artikel.html">&larr; Balik ke semua artikel</a>
+        </div>
+      </div>`;
+  } else {
+    document.title = article.title + " — Efeksains";
+    const color = CATEGORY_COLORS[article.category];
+    const label = CATEGORY_LABELS[article.category];
+
+    const related = ARTICLES.filter(a => a.id !== article.id && a.category === article.category).slice(0, 3);
+    const relatedFallback = related.length > 0 ? related : ARTICLES.filter(a => a.id !== article.id).slice(0, 3);
+
+    contentEl.innerHTML = `
+      <div class="wrap-narrow">
+        <a class="back-link" href="artikel.html">&larr; Semua artikel</a>
+        <section class="article-head">
+          <span class="tag mono" style="color:${color};"><span class="dot" style="background:${color};"></span>${label}</span>
+          <h1 class="display">${article.title}</h1>
+          <div class="article-meta">
+            <span>${article.author}</span>
+            <span>&middot;</span>
+            <span>${article.date}</span>
+            <span>&middot;</span>
+            <span>${article.readTime} baca</span>
+          </div>
+        </section>
+        <div class="article-content">
+          ${article.content.map(p => `<p>${p}</p>`).join('')}
+        </div>
+      </div>
+
+      <svg class="pulse" viewBox="0 0 1100 40" preserveAspectRatio="none">
+        <path d="M0 20 L500 20 L520 5 L540 35 L560 20 L1100 20" stroke="${color}"></path>
+      </svg>
+
+      <div class="wrap">
+        <div class="related-head">Baca juga</div>
+        <div class="grid">${relatedFallback.map(cardHTML).join('')}</div>
+      </div>
+    `;
+  }
+</script>
+
+</body>
+</html>
