@@ -201,7 +201,8 @@ function clearStatus(elId) {
 
 // ---------- GitHub API ----------
 async function fetchFile() {
-  const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`, {
+  const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}&_=${Date.now()}`, {
+    cache: "no-store",
     headers: {
       "Authorization": `token ${token}`,
       "Accept": "application/vnd.github+json"
@@ -237,7 +238,7 @@ function extractArticlesArray(fileText) {
   };
 }
 
-async function commitArticles(newArticles, commitMessage) {
+async function commitArticles(newArticles, commitMessage, isRetry) {
   const fileText = await fetchFile();
   const { before, after } = extractArticlesArray(fileText);
   const newArrayText = JSON.stringify(newArticles, null, 2);
@@ -258,7 +259,12 @@ async function commitArticles(newArticles, commitMessage) {
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(err.message || `Gagal commit (status ${res.status}).`);
+    const msg = err.message || `Gagal commit (status ${res.status}).`;
+    // Kalau sha gak cocok (409) dan belum pernah retry, coba sekali lagi otomatis dengan sha terbaru
+    if (!isRetry && (res.status === 409 || /does not match/i.test(msg))) {
+      return commitArticles(newArticles, commitMessage, true);
+    }
+    throw new Error(msg);
   }
 }
 
